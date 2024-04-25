@@ -19,7 +19,12 @@ def is_valid_upload_path(path, base_directory):
 
 
 def get_relative_path(file_path, base_directory):
-    return file_path.split(os.path.commonprefix([base_directory, file_path]))[1][1:]
+    # Edge case of base_directory being /
+    if base_directory == '/':
+        base_directory = ''
+    # Instead of file_path.split(os.path.commonprefix([base_directory, file_path]))[1][1:]
+    relative_path = os.path.relpath(file_path, start=base_directory)
+    return relative_path
 
 
 def human_readable_file_size(size):
